@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-@TeleOp(name="Main", group="Linear Opmode")
+@TeleOp(name="Main")
 public class MainTeleOp extends OpMode {
     private ElapsedTime runtime = new ElapsedTime();
 
@@ -34,9 +34,18 @@ public class MainTeleOp extends OpMode {
         double leftPower  = Range.clip(drive + turn, -1.0, 1.0);
         double rightPower = Range.clip(drive - turn, -1.0, 1.0);
 
-        robot.controlDrivetrain(leftPower, rightPower);
-        robot.controlShooter(gamepad1.a);
-        robot.controlIntake();
+        // control robot
+        robot.controlDrivetrain(
+                leftPower,
+                rightPower
+        );
+        robot.controlShooter(
+                gamepad1.a,
+                gamepad1.right_bumper
+        );
+        robot.controlIntake(
+                gamepad1.left_bumper
+        );
 
         // Show the elapsed game time and wheel power.
         telemetry.addData("Status", "Run Time: " + runtime.toString());
